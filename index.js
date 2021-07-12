@@ -32,7 +32,7 @@ app.get("/", (req, res) => {
 
 app.post("/actualizarUsuario", (req, res) => {
   const { id, nombre, telefono, email, password } = req.body;
-  console.log(req.body);
+  console.log(req);
   let query = `UPDATE usuarios
     SET usuario = '${email}',
         contrasenia = '${password}',
