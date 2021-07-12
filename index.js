@@ -30,6 +30,34 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
+app.get("/:idUser/favoritos", (req, res) => {
+  const { idUser } = req.params;
+  console.log(req.params);
+  let query = `
+    select n.id as id,
+    negocio,
+    descripcion,
+    direccion,
+    latitud,
+    longitud,
+    id_categoria,
+    1 as favorito,
+    foto,
+    c.categoria
+  from negocios n
+      join favoritos f on n.id = f.id_negocio
+      join usuarios u on f.id_usuario = u.id
+      join categorias c ON n.id_categoria = c.id
+  where id_usuario like ${idUser}`;
+  pool.query(query, (error, results, fields) => {
+    if (error) {
+      res.status(500).json({ code: 500, msg: error.message, output: error });
+    } else {
+      res.status(200).json({ code: 200, msg: "Success", output: results });
+    }
+  });
+});
+
 app.post("/actualizarUsuario", (req, res) => {
   const { id, nombre, telefono, email, password } = req.body;
   console.log(req.body);
@@ -42,10 +70,8 @@ app.post("/actualizarUsuario", (req, res) => {
   pool.query(query, (error, results, fields) => {
     if (error) {
       res.status(500).json({ code: 500, msg: error.message, output: error });
-    }else{
-        res
-      .status(200)
-      .json({ code: 200, msg: "Success", output: results });
+    } else {
+      res.status(200).json({ code: 200, msg: "Success", output: results });
     }
   });
 });
@@ -57,10 +83,8 @@ app.post("/altaUsuario", (req, res) => {
   pool.query(query, (error, results, fields) => {
     if (error) {
       res.status(500).json({ code: 500, msg: error.message, output: error });
-    }else{
-        res
-      .status(200)
-      .json({ code: 200, msg: "Success", output: results });
+    } else {
+      res.status(200).json({ code: 200, msg: "Success", output: results });
     }
   });
 });
