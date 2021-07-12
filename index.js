@@ -10,9 +10,9 @@ const mysql = require("mysql");
 var pool = mysql.createPool({
   connectionLimit: 10,
   host: "198.199.83.125",
-  user: "emmanuel",
-  password: "papaya papaya",
-  database: "my_eats",
+  user: "",
+  password: "",
+  database: "my_eats_joe",
 });
 
 //Para aceptar origenes cruzados
